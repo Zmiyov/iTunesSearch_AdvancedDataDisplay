@@ -19,7 +19,7 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     var searchTask: Task<Void, Never>? = nil
     
     var tableViewImageLoadTasks: [IndexPath: Task<Void, Never>] = [:]
-    var tableViewDataSource: UITableViewDiffableDataSource<String, StoreItem>!
+    var tableViewDataSource: StoreItemTableViewDiffableDataSource!
     
     var collectionViewImageLoadTasks: [IndexPath: Task<Void, Never>] = [:]
     var collectionViewDataSource: UICollectionViewDiffableDataSource<String, StoreItem>!
@@ -148,7 +148,7 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     
     func configureTableViewDataSource(_ tableView: UITableView) {
         
-        tableViewDataSource = UITableViewDiffableDataSource<String, StoreItem>(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
+        tableViewDataSource = StoreItemTableViewDiffableDataSource(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
             let cell = tableView.dequeueReusableCell(withIdentifier: "Item", for: indexPath) as! ItemTableViewCell
             self.tableViewImageLoadTasks[indexPath]?.cancel()
             self.tableViewImageLoadTasks[indexPath] = Task {
