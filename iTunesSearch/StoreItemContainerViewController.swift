@@ -16,7 +16,6 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         return searcScope
     }
     
-    // keep track of async tasks so they can be cancelled if appropriate.
     var searchTask: Task<Void, Never>? = nil
     
     var tableViewImageLoadTasks: [IndexPath: Task<Void, Never>] = [:]
@@ -38,14 +37,34 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         searchController.searchBar.scopeButtonTitles = SearchScope.allCases.map { $0.title }
     }
     
+    func createSectionedSnapshot(from items: [StoreItem]) -> NSDiffableDataSourceSnapshot<String, StoreItem> {
+        let movies = items.filter { $0.kind == "feature-movie"}
+        let music = items.filter { $0.kind == "song" || $0.kind == "album" }
+        let apps = items.filter { $0.kind == "software" }
+        let books = items.filter { $0.kind == "ebook" }
+        
+        let grouped: [(SearchScope, [StoreItem])] = [
+            (.movies, movies),
+            (.music, music),
+            (.apps, apps),
+            (.books, books)
+        ]
+        
+        var snapshot = NSDiffableDataSourceSnapshot<String, StoreItem>()
+        grouped.forEach { (scope, items) in
+            if items.count > 0 {
+                snapshot.appendSections([scope.title])
+                snapshot.appendItems(items, toSection: scope.title)
+            }
+        }
+        return snapshot
+    }
+    
+    //MARK: - Network
+    
     func updateSearchResults(for searchController: UISearchController) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(fetchMatchingItems), object: nil)
         perform(#selector(fetchMatchingItems), with: nil, afterDelay: 0.3)
-    }
-                
-    @IBAction func switchContainerView(_ sender: UISegmentedControl) {
-        tableContainerView.isHidden.toggle()
-        collectionContainerView.isHidden.toggle()
     }
     
     @objc func fetchMatchingItems() {
@@ -89,10 +108,9 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     
     func handleFetchedItems(_ items: [StoreItem]) async {
         let currentSnapshotItems = itemsSnapshot.itemIdentifiers
-        var updatedSnapshot = NSDiffableDataSourceSnapshot<String, StoreItem>()
-        updatedSnapshot.appendSections(["Results"])
-        updatedSnapshot.appendItems(currentSnapshotItems + items)
+        let updatedSnapshot = createSectionedSnapshot(from: currentSnapshotItems + items)
         itemsSnapshot = updatedSnapshot
+        
         await tableViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
         await collectionViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
     }
@@ -119,7 +137,15 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
             }
         }
     }
-            
+                
+    @IBAction func switchContainerView(_ sender: UISegmentedControl) {
+        tableContainerView.isHidden.toggle()
+        collectionContainerView.isHidden.toggle()
+    }
+    
+
+         //MARK: - Data Source
+    
     func configureTableViewDataSource(_ tableView: UITableView) {
         
         tableViewDataSource = UITableViewDiffableDataSource<String, StoreItem>(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
@@ -147,6 +173,8 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         })
         
     }
+    
+    //MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let tableViewController = segue.destination as? StoreItemListTableViewController {
