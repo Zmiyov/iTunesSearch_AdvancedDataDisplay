@@ -26,6 +26,8 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     
     var itemsSnapshot = NSDiffableDataSourceSnapshot<String, StoreItem>()
     
+    weak var collectionViewController: StoreItemCollectionViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -111,6 +113,8 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         let updatedSnapshot = createSectionedSnapshot(from: currentSnapshotItems + items)
         itemsSnapshot = updatedSnapshot
         
+        collectionViewController?.configureCollectionViewLayout(for: selectedSearchScope)
+        
         await tableViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
         await collectionViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
     }
@@ -192,8 +196,9 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         }
         
         if let collectionViewController = segue.destination as? StoreItemCollectionViewController {
+            collectionViewController.configureCollectionViewLayout(for: selectedSearchScope)
             configureCollectionViewDataSource(collectionViewController.collectionView)
+            self.collectionViewController = collectionViewController
         }
     }
-    
 }
