@@ -84,7 +84,6 @@
 				A5D9DCDB288C4DE3003424F1 /* Controllers */,
 				18A6052523CF9803002037CA /* Assets.xcassets */,
 				18A6052723CF9803002037CA /* LaunchScreen.storyboard */,
-				18A6052223CF9802002037CA /* Main.storyboard */,
 			);
 			path = iTunesSearch;
 			sourceTree = "<group>";
@@ -114,6 +113,7 @@
 		A5D9DCDD288C4E20003424F1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18A6052223CF9802002037CA /* Main.storyboard */,
 				18A6053223CF9ADA002037CA /* ItemTableViewCell.swift */,
 				A5D34E1B287C9E5600FC3127 /* ItemCollectionViewCell.swift */,
 				A5D9DCD9288C3087003424F1 /* StoreItemCollectionViewSectionHeader.swift */,
