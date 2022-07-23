@@ -77,24 +77,48 @@
 			isa = PBXGroup;
 			children = (
 				18A6052A23CF9803002037CA /* Info.plist */,
-				A5156AD628898667001E18BB /* StoreItemTableViewDiffableDataSource.swift */,
-				A5D9DCD9288C3087003424F1 /* StoreItemCollectionViewSectionHeader.swift */,
 				18A6051C23CF9802002037CA /* AppDelegate.swift */,
-				A5D34E1D287CAA4D00FC3127 /* ItemDisplaying.swift */,
-				18A6053223CF9ADA002037CA /* ItemTableViewCell.swift */,
-				A5D34E1B287C9E5600FC3127 /* ItemCollectionViewCell.swift */,
 				18A6051E23CF9802002037CA /* SceneDelegate.swift */,
-				18A6053423CFABBB002037CA /* StoreItem.swift */,
-				18A6053623CFABDC002037CA /* StoreItemController.swift */,
-				A5156AD428880DC6001E18BB /* SearchScope.swift */,
-				18A6053023CF9829002037CA /* StoreItemListTableViewController.swift */,
-				1812E9A223F36978009BBFA7 /* StoreItemCollectionViewController.swift */,
-				1812E9A023F35901009BBFA7 /* StoreItemContainerViewController.swift */,
+				A5D9DCDC288C4E05003424F1 /* Model */,
+				A5D9DCDD288C4E20003424F1 /* View */,
+				A5D9DCDB288C4DE3003424F1 /* Controllers */,
 				18A6052523CF9803002037CA /* Assets.xcassets */,
 				18A6052723CF9803002037CA /* LaunchScreen.storyboard */,
 				18A6052223CF9802002037CA /* Main.storyboard */,
 			);
 			path = iTunesSearch;
+			sourceTree = "<group>";
+		};
+		A5D9DCDB288C4DE3003424F1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				18A6053623CFABDC002037CA /* StoreItemController.swift */,
+				18A6053023CF9829002037CA /* StoreItemListTableViewController.swift */,
+				1812E9A223F36978009BBFA7 /* StoreItemCollectionViewController.swift */,
+				1812E9A023F35901009BBFA7 /* StoreItemContainerViewController.swift */,
+				A5156AD628898667001E18BB /* StoreItemTableViewDiffableDataSource.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A5D9DCDC288C4E05003424F1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18A6053423CFABBB002037CA /* StoreItem.swift */,
+				A5156AD428880DC6001E18BB /* SearchScope.swift */,
+				A5D34E1D287CAA4D00FC3127 /* ItemDisplaying.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5D9DCDD288C4E20003424F1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18A6053223CF9ADA002037CA /* ItemTableViewCell.swift */,
+				A5D34E1B287C9E5600FC3127 /* ItemCollectionViewCell.swift */,
+				A5D9DCD9288C3087003424F1 /* StoreItemCollectionViewSectionHeader.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

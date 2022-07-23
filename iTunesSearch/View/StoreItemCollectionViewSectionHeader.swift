@@ -8,6 +8,7 @@
 import UIKit
 
 class StoreItemCollectionViewSectionHeader: UICollectionReusableView {
+    
     static let reuseIdentifier = "StoreItemCollectionViewSectionHeader"
     let titleLabel: UILabel = {
         let label = UILabel()
