@@ -18,6 +18,8 @@ class StoreItemCollectionViewController: UICollectionViewController {
         
         collectionView.collectionViewLayout = UICollectionViewCompositionalLayout(section: section)
         
+        collectionView.register(StoreItemCollectionViewSectionHeader.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: StoreItemCollectionViewSectionHeader.reuseIdentifier)
+        
     }
     
 }
